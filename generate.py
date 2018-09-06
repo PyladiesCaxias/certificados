@@ -15,9 +15,8 @@ def convert_to_png(file, file_name='new_pdf.pdf'):
     cairosvg.svg2png(
         url=file, write_to=file_name)
 
-def generate_certificado():
+def load_settings():
     pass
-
 
 def main():
     pass

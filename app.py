@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 
-class Certificado(Object):
+class Configuracao(Object):
     svg = ''
     img = ''
     pdf = ''

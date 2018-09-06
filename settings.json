@@ -1,4 +1,6 @@
 {
   "svg": "teste.svg",
-  "csv": "teste.csv"
+  "csv": "teste.csv",
+  "color": "#F39300"
+
 }
