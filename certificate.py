@@ -1,15 +1,15 @@
 # -*- coding: UTF-8 -*-
+from convert import convert_to_pdf
 
+class Certificate():
+    xml = ''
+    name_svg = ''
+    name_pdf = ''
 
-class Certificate(Object):
-    fname = ''
-    name = ''
-
-    def __init__(self):
-        pass
-
-    def load_svg():
-        pass
+    def __init__(self, xml='', name=''):
+        self.xml = xml
+        self.name_svg = name + '.svg'
+        self.name_pdf = name + '.pdf'
 
     def generate_certificado():
         pass
@@ -22,3 +22,9 @@ class Certificate(Object):
 
     def replace_logo():
         pass
+
+    def save(self):
+        file_obj = open(self.name_svg, 'w')
+        file_obj.write(self.xml)
+        file_obj.close()
+        convert_to_pdf(self.name_svg, self.name_pdf)
