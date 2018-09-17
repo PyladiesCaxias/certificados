@@ -2,27 +2,20 @@
 
 from xml.dom.minidom import parse, parseString
 from certificate import Certificate
+from app import Configuracao
+import os
 
-def load_svg(name=''):
-    file_obj = open('certificate_dg.svg', 'r').read()
+def load_svg(file_name='svg/certificate_dg.svg'):
+    file_obj = open(file_name, 'r').read()
     doc = parseString(file_obj)  # parseString also exists
-    for text in doc.getElementsByTagName('text'):
-        id = text.getAttribute('id')
-        if id == 'name':
-            tspan = text.childNodes[0]
-            tspan.childNodes[0].nodeValue = name
-
-        print(text.toxml())
-
-    return doc.toxml()
+    return doc
 
 def load_settings():
     pass
 
-def load_csv():
-    import ipdb; ipdb.set_trace()
+def load_csv(file_name='caxiasdosul2.csv'):
     lista = []
-    with open('caxiasdosul2.csv', 'r') as file:
+    with open(file_name, 'r') as file:
         for line in file:
             lista.append(line)
 
@@ -30,11 +23,13 @@ def load_csv():
 
 def main():
     lista = load_csv()
-
+    config = Configuracao("files_svg", "files_pdf")
+    config.generate_dir()
     for cert in lista:
-        svg = load_svg(cert)
-        certificado = Certificate(svg)
-        certificado.save()
+        svg = load_svg()
+        certificado = Certificate(name=cert, app=config, xml_dom=svg)
+        certificado.save_pdf()
+    print(len(lista), " - Certificados gerados")
 
 
 main()
