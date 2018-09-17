@@ -1,33 +1,37 @@
 # -*- coding: UTF-8 -*-
 
-from xml.dom.minidom import parse, parseString
 from certificate import Certificate
 from app import Configuracao
 import os
+import json
 
-def load_svg(file_name='svg/certificate_dg.svg'):
-    file_obj = open(file_name, 'r').read()
-    doc = parseString(file_obj)  # parseString also exists
-    return doc
 
-def load_settings():
-    pass
-
-def load_csv(file_name='caxiasdosul2.csv'):
-    lista = []
-    with open(file_name, 'r') as file:
-        for line in file:
-            lista.append(line)
-
-    return lista
+def load_settings(file='settings.json'):
+    with open(file) as f:
+        data = json.load(f)
+    return data
 
 def main():
-    lista = load_csv()
-    config = Configuracao("files_svg", "files_pdf")
-    config.generate_dir()
+    app = load_settings()
+    config = Configuracao(
+        folder_svg=app['folder_svg'],
+        folder_pdf=app['folder_pdf'],
+        base_svg=app['base_svg'],
+        list_csv=app['list_csv'],
+        color=app['color'],
+        logo=app['logo'],
+        signature_path=app['signature_path'],
+        signature_name=app['signature_name'],
+        signature_description=app['signature_description'],
+        time=app['time'],
+        date_event=app['date_event']
+    )
+    config.load_svg()  # Load file svg and create xml.dom element 
+    lista = config.load_csv()
+    config.generate_dir()  # Cria pastas
+
     for cert in lista:
-        svg = load_svg()
-        certificado = Certificate(name=cert, app=config, xml_dom=svg)
+        certificado = Certificate(name=cert, app=config, xml_dom=config.xml_dom)
         certificado.save_pdf()
     print(len(lista), " - Certificados gerados")
 

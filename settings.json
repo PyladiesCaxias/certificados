@@ -1,6 +1,13 @@
 {
-  "svg": "teste.svg",
-  "csv": "teste.csv",
-  "color": "#F39300"
-
+  "base_svg": "svg/certificate_dg.svg",
+  "list_csv": "caxiasdosul2.csv",
+  "color": "",
+  "logo": "",
+  "signature_path": "",
+  "signature_name": "",
+  "signature_description": "",
+  "folder_svg": "files_svg",
+  "folder_pdf": "files_pdf",
+  "date_event": "",
+  "time": ""
 }
